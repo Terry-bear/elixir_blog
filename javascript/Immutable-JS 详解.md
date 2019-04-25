@@ -251,14 +251,14 @@ console.log(this.state.data.times);
 >使用 Immutable 后：  
 
 ```javascript
-getInitialState() {    
-return {      
-data: Map({ times: 0 })    
+getInitialState() {
+return {
+data: Map({ times: 0 })
 }  
 },  
-handleAdd() {    
+handleAdd() {
 this.setState({ data: this.state.data.update('times', v => v + 1) });
-// 这时的 times 并不会改变    
+// 这时的 times 并不会改变
 console.log(this.state.data.get('times'));  
 }
 ```
@@ -266,9 +266,9 @@ console.log(this.state.data.get('times'));
 >上面的&nbsp;handleAdd&nbsp;可以简写成：  
 
 ```javascript
-handleAdd() {    
-this.setState(({data}) => ({      
-data: data.update('times', v => v + 1) })    
+handleAdd() {
+this.setState(({data}) => ({
+data: data.update('times', v => v + 1) })
 });  
 }
 ```
@@ -290,21 +290,21 @@ getAll() { return todos; }
 });
 
 Dispatcher.register(action => {  
-if (action.actionType === 'create') {    
-let id = createGUID();    
-history.push(todos);  // 记录当前操作前的数据，便于撤销    
-todos = todos.set(id, Map({      
-id: id,      
-complete: false,      
-text: action.text.trim()    
-}));   
+if (action.actionType === 'create') {
+let id = createGUID();
+history.push(todos);  // 记录当前操作前的数据，便于撤销
+todos = todos.set(id, Map({
+id: id,
+complete: false,
+text: action.text.trim()
+}));
 TodoStore.emitChange();  
-} else if (action.actionType === 'undo') {    
-// 这里是撤销功能实现，    
-// 只需从 history 数组中取前一次 todos 即可    
-if (history.length > 0) {      
-todos = history.pop();    
-}    
+} else if (action.actionType === 'undo') {
+// 这里是撤销功能实现，
+// 只需从 history 数组中取前一次 todos 即可
+if (history.length > 0) {
+todos = history.pop();
+}
 TodoStore.emitChange();  
 }
 });
